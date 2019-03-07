@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "removeComments": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.test.ts"]
+}
