@@ -1,5 +1,5 @@
 import { Address } from "./index.d";
-import { mod, createCellReader, animator } from "./animator";
+import { mod, createCellReader, animator } from ".";
 
 it("should wrap positive and negative numbers", () => {
   expect(mod(5, 4)).toBe(1);
