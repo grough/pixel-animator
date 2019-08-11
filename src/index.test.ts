@@ -29,8 +29,8 @@ it("should generate a 2×2×2 animation", () => {
   const rows = 2;
   const frames = 2;
   const gen = animator<{ row: number; column: number; frame: number }>({
-    evolver: ({ cells, row, column, frame }) => ({ row, column, frame }),
-    colorizer: cell => ({
+    evolve: ({ cells, row, column, frame }) => ({ row, column, frame }),
+    colorize: cell => ({
       red: cell.column,
       green: cell.row,
       blue: cell.frame,

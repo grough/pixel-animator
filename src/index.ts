@@ -24,8 +24,8 @@ export type Animation<Cell = FrameContext> = {
   columns?: number;
   rows?: number;
   frames?: number;
-  evolver?: (context: FrameContext & { cells: CellReader<Cell> }) => Cell;
-  colorizer: (cell: Cell) => Color;
+  evolve?: (context: FrameContext & { cells: CellReader<Cell> }) => Cell;
+  colorize: (cell: Cell) => Color;
 };
 
 export function mod(x: number, n: number): number {
@@ -59,7 +59,7 @@ function colorToPixel(color: Color): [number, number, number, number] {
 }
 
 export function* animator<Cell = FrameContext>(animation: Animation<Cell>) {
-  const { columns, rows, frames, evolver, colorizer } = {
+  const { columns, rows, frames, evolve, colorize } = {
     columns: 16,
     rows: 16,
     frames: 16,
@@ -85,12 +85,16 @@ export function* animator<Cell = FrameContext>(animation: Animation<Cell>) {
           frame,
           cells: cellReader,
         };
-        const cell = evolver ? evolver(context) : context;
+        const cell = evolve ? evolve(context) : context;
+        // @ts-ignore FIXME
         cellData.push(cell);
-        const color = colorizer(cell);
+        // @ts-ignore FIXME
+        const color = colorize(cell);
         imageData = imageData.concat(colorToPixel(color));
       }
     }
     yield new Uint8ClampedArray(imageData);
   }
 }
+
+export { render } from "./render-web";

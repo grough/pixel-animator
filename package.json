@@ -1,8 +1,12 @@
 {
-  "name": "ts-pixel-animator",
+  "name": "pixel-animator",
   "description": "A tool for creating low-res animations",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "author": "Gavin Rough <gavin@grough.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grough/pixel-animator"
+  },
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
