@@ -2,12 +2,12 @@
   "name": "ts-pixel-animator",
   "description": "A tool for creating low-res animations",
   "version": "1.0.0",
+  "author": "Gavin Rough <gavin@grough.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist/* && tsc",
-    "test": "./node_modules/jest/bin/jest.js --watchAll"
+    "test": "jest --watchAll"
   },
   "files": [
     "dist"

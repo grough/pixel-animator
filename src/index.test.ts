@@ -1,4 +1,3 @@
-import { Address } from "./index.d";
 import { mod, createCellReader, animator } from ".";
 
 it("should wrap positive and negative numbers", () => {
@@ -26,36 +25,36 @@ it("should create an array accessor", () => {
 });
 
 it("should generate a 2×2×2 animation", () => {
-  const width = 2;
-  const height = 2;
+  const columns = 2;
+  const rows = 2;
   const frames = 2;
-  const gen = animator({
-    mutator: context => context,
-    colorizer: (cell: Address) => ({
-      red: cell.column / width,
-      green: cell.row / height,
-      blue: cell.frame / frames,
+  const gen = animator<{ row: number; column: number; frame: number }>({
+    evolver: ({ cells, row, column, frame }) => ({ row, column, frame }),
+    colorizer: cell => ({
+      red: cell.column,
+      green: cell.row,
+      blue: cell.frame,
     }),
-    width,
-    height,
+    columns,
+    rows,
     frames,
   });
   expect(gen.next().value).toEqual(
     // prettier-ignore
     new Uint8ClampedArray([
       0, 0, 0, 255,
-      127, 0, 0, 255,
-      0, 127, 0, 255,
-      127, 127, 0, 255
+      1, 0, 0, 255,
+      0, 1, 0, 255,
+      1, 1, 0, 255
     ]),
   );
   expect(gen.next().value).toEqual(
     // prettier-ignore
     new Uint8ClampedArray([
-      0, 0, 127, 255,
-      127, 0, 127, 255,
-      0, 127, 127, 255,
-      127, 127, 127, 255
+      0, 0, 1, 255,
+      1, 0, 1, 255,
+      0, 1, 1, 255,
+      1, 1, 1, 255
     ]),
   );
   expect(gen.next().done).toBe(true);

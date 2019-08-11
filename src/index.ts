@@ -1,49 +1,91 @@
-import { Color, CellReader, Renderable, Mutator } from "./index.d";
-
-export const mod = (x: number, n: number): number => ((x % n) + n) % n;
-
-export const index = (
-  column: number,
-  row: number,
-  width: number,
-  height: number,
-) => mod(row, height) * width + mod(column, width);
-
-export const createCellReader = <C>(
-  width: number,
-  height: number,
-  cellData: C[],
-): CellReader<C> => (column, row) =>
-  cellData[index(column, row, width, height)];
-
-const colorToPixel = (color: Color): [number, number, number, number] => {
-  return [
-    Math.floor(color.red * 255),
-    Math.floor(color.green * 255),
-    Math.floor(color.blue * 255),
-    255,
-  ];
+type Boundaries = {
+  columns: number;
+  rows: number;
+  frames: number;
 };
 
-export function* animator<C>({
-  mutator,
-  colorizer,
-  width,
-  height,
-  frames,
-}: Renderable<C>) {
-  let cellData: C[] = [];
-  let cellDataPrevious: C[];
+type Coordinate = {
+  column: number;
+  row: number;
+  frame: number;
+};
+
+type FrameContext = Boundaries & Coordinate;
+
+type CellReader<Cell> = (column: number, row: number) => Cell;
+
+type Color = {
+  red: number;
+  green: number;
+  blue: number;
+};
+
+export type Animation<Cell = FrameContext> = {
+  columns?: number;
+  rows?: number;
+  frames?: number;
+  evolver?: (context: FrameContext & { cells: CellReader<Cell> }) => Cell;
+  colorizer: (cell: Cell) => Color;
+};
+
+export function mod(x: number, n: number): number {
+  return ((x % n) + n) % n;
+}
+
+export function index(
+  column: number,
+  row: number,
+  columns: number,
+  rows: number,
+) {
+  return mod(row, rows) * columns + mod(column, columns);
+}
+
+export function createCellReader<Cell>(
+  columns: number,
+  rows: number,
+  cellData: Cell[],
+): CellReader<Cell> {
+  return (column, row) => cellData[index(column, row, columns, rows)];
+}
+
+function colorToPixel(color: Color): [number, number, number, number] {
+  return [
+    Math.floor(color.red),
+    Math.floor(color.green),
+    Math.floor(color.blue),
+    255,
+  ];
+}
+
+export function* animator<Cell = FrameContext>(animation: Animation<Cell>) {
+  const { columns, rows, frames, evolver, colorizer } = {
+    columns: 16,
+    rows: 16,
+    frames: 16,
+    ...animation,
+  };
+  let cellData: Cell[] = [];
+  let cellDataPrevious: Cell[];
   let imageData: number[];
-  let cellReader: CellReader<C>;
+  let cellReader: CellReader<Cell>;
   for (let frame = 0; frame < frames; frame++) {
     cellDataPrevious = cellData;
-    cellReader = createCellReader(width, height, cellDataPrevious);
+    cellReader = createCellReader<Cell>(columns, rows, cellDataPrevious);
     cellData = [];
     imageData = [];
-    for (let row = 0; row < height; row++) {
-      for (let column = 0; column < width; column++) {
-        const cell: C = mutator({ column, row, frame, cells: cellReader });
+    for (let row = 0; row < rows; row++) {
+      for (let column = 0; column < columns; column++) {
+        const context = {
+          columns,
+          rows,
+          frames,
+          column,
+          row,
+          frame,
+          cells: cellReader,
+        };
+        const cell = evolver ? evolver(context) : context;
         cellData.push(cell);
         const color = colorizer(cell);
         imageData = imageData.concat(colorToPixel(color));

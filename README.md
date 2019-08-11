@@ -60,3 +60,8 @@ const frames = animator({
 let imageData = frames.next();
 …
 ```
+
+## Things to do
+
+- [ ] Add gif examples
+- [ ] Additional image processing stage (e.g. to support dithering)
