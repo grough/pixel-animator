@@ -14,13 +14,19 @@ type FrameContext = Boundaries & Position;
 
 type CellReader<Cell> = (column: number, row: number) => Cell;
 
+type Evolver<Cell> = (
+  context: FrameContext & { cells: CellReader<Cell> },
+) => Cell;
+
+type Colorizer<Cell> = (cell: Cell) => UserColor;
+
 export type Animation<Cell = FrameContext> = {
   columns: number;
   rows: number;
   frames: number;
   frameRate: number;
-  evolve?: (context: FrameContext & { cells: CellReader<Cell> }) => Cell;
-  colorize: (cell: Cell) => UserColor;
+  evolve?: Evolver<Cell>;
+  colorize: Colorizer<Cell>;
 };
 
 export type UserAnimation<Cell = FrameContext> = {
@@ -28,17 +34,13 @@ export type UserAnimation<Cell = FrameContext> = {
   rows?: number;
   frames?: number;
   frameRate?: number;
-  evolve?: (context: FrameContext & { cells: CellReader<Cell> }) => Cell;
-  colorize: (cell: Cell) => UserColor;
+  evolve?: Evolver<Cell>;
+  colorize: Colorizer<Cell>;
 };
 
 type UserColor = { red?: number; green?: number; blue?: number } | number;
 
-type Color = {
-  red: number;
-  green: number;
-  blue: number;
-};
+type Color = { red: number; green: number; blue: number };
 
 type Pixel = [number, number, number, number];
 
@@ -72,12 +74,7 @@ function normalizeColor(color: UserColor): Color {
 
 function userColorToPixel(userColor: UserColor): Pixel {
   const color: Color = normalizeColor(userColor);
-  return [
-    Math.floor(color.red),
-    Math.floor(color.green),
-    Math.floor(color.blue),
-    255,
-  ];
+  return [color.red * 255, color.green * 255, color.blue * 255, 255];
 }
 
 export function* animator<Cell = FrameContext>(animation: Animation<Cell>) {

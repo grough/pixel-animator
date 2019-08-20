@@ -1,12 +1,12 @@
 **[pixel-animator](https://www.npmjs.com/package/pixel-animator)** is a library for creating small, colorful, pixel-based animations with JavaScript. It's pretty much the same idea as a [fragment shader](https://en.wikipedia.org/wiki/Shader#Pixel_shaders) from graphics programming, but much, much slower.
 
-_This guide is a work in progress - only essential features have been covered so far_.
+_This guide is a work in progress and only essential features are covered for now_.
 
 ## Getting Started
 
-All you need to start animating pixels is a [`<canvas />`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) and a special kind of function that we'll call `colorize`.
+All you need to start animating pixels is an [HTML canvas](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) and a special kind of function that we'll call `colorize`.
 
-Each pixel in an animation has a unique coordinate identified by its `column`, `row` and `frame` numbers. Your `colorize` function, whose purpose is to take the coordinate of a pixel and assign a color to it, will be run once for every pixel in your animation.
+Each pixel in an animation belongs a unique coordinate identified by a `column`, `row` and `frame`. The purpose of your `colorize` function is to take a single coordinate and assign a colored pixel to it. Your function will automatically be run for every coordinate in the animation. The result is what you see on the canvas.
 
 ### Example 1: White pixel blinking on a grey background
 
@@ -30,7 +30,7 @@ render({ colorize }, document.getElementById("my-canvas"));
 
 In this function, each pixel says to itself: _If I'm in the sixth column, third row, and my frame number is even, I should be white. If not, make me dark grey_. The values `1` and `0.25` represent white and dark grey.
 
-We also included a little extra code here that's needed to connect the function to a canvas.
+We also included some extra code that's needed to connect the function to a canvas.
 
 ---
 
@@ -76,7 +76,7 @@ function colorize({
 
 [[Run this code](https://codesandbox.io/s/example-animated-gradient-c0gnl)]
 
-## "Help, my pixels are blurry!"
+## Dealing with a blurry canvas
 
 You might notice that things don't look so sharp when rendering to your canvas element. The following CSS will stop the browser from smoothing things out as you scale the canvas up:
 

@@ -24,38 +24,66 @@ it("should create an array accessor", () => {
   expect(cells(2, -3)).toBe(2);
 });
 
-it("should generate a 2×2×2 animation", () => {
-  const columns = 2;
-  const rows = 2;
-  const frames = 2;
-  const gen = animator<{ row: number; column: number; frame: number }>({
-    evolve: ({ cells, row, column, frame }) => ({ row, column, frame }),
-    colorize: cell => ({
-      red: cell.column,
-      green: cell.row,
-      blue: cell.frame,
+it("should generate a stateless 2×2×2 animation", () => {
+  // @ts-ignore
+  const gen = animator({
+    columns: 2,
+    rows: 2,
+    frames: 2,
+    colorize: ({ column, row, frame, columns, rows, frames }) => ({
+      red: column / columns,
+      green: row / rows,
+      blue: frame / frames,
     }),
-    columns,
-    rows,
-    frames,
   });
-  expect(gen.next().value).toEqual(
-    // prettier-ignore
-    new Uint8ClampedArray([
-      0, 0, 0, 255,
-      1, 0, 0, 255,
-      0, 1, 0, 255,
-      1, 1, 0, 255
-    ]),
-  );
-  expect(gen.next().value).toEqual(
-    // prettier-ignore
-    new Uint8ClampedArray([
-      0, 0, 1, 255,
-      1, 0, 1, 255,
-      0, 1, 1, 255,
-      1, 1, 1, 255
-    ]),
-  );
-  expect(gen.next().done).toBe(true);
+  // prettier-ignore
+  const outputFrame1 = new Uint8ClampedArray([
+    0, 0, 0, 255,
+    128, 0, 0, 255,
+    0, 128, 0, 255,
+    128, 128, 0, 255
+  ]);
+  // prettier-ignore
+  const outputFrame2 = new Uint8ClampedArray([
+    0, 0, 128, 255,
+    128, 0, 128, 255,
+    0, 128, 128, 255,
+    128, 128, 128, 255
+  ]);
+  expect(gen.next().value).toEqual(outputFrame1);
+  expect(gen.next().value).toEqual(outputFrame2);
+  // Expect generator to loop back to the first frame
+  expect(gen.next().value).toEqual(outputFrame1);
+});
+
+it("should generate a stateful/evolving 2×2×2 animation", () => {
+  // @ts-ignore
+  const gen = animator<boolean>({
+    columns: 2,
+    rows: 2,
+    frames: 2,
+    evolve: ({ column, row, frame, cells }) => {
+      if (frame === 0) return false;
+      return !cells(column, row);
+    },
+    colorize: cell => (cell ? 1 : 0),
+  });
+  // prettier-ignore
+  const outputFrame1 = new Uint8ClampedArray([
+    0, 0, 0, 255,
+    0, 0, 0, 255,
+    0, 0, 0, 255,
+    0, 0, 0, 255
+  ]);
+  // prettier-ignore
+  const outputFrame2 = new Uint8ClampedArray([
+    255, 255, 255, 255,
+    255, 255, 255, 255,
+    255, 255, 255, 255,
+    255, 255, 255, 255
+  ]);
+  expect(gen.next().value).toEqual(outputFrame1);
+  expect(gen.next().value).toEqual(outputFrame2);
+  // Expect generator to loop back to the first frame
+  expect(gen.next().value).toEqual(outputFrame1);
 });

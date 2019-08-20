@@ -1,58 +1,46 @@
 import { animator, Animation, UserAnimation } from ".";
 import { baseAnimation } from "./defaults";
 
-let playing = true;
-let imageData;
-let currentAnimationFrame;
-
 export function render(
   userAnimation: UserAnimation,
   canvas: HTMLCanvasElement,
 ) {
+  let playing = true;
+  let imageData;
+  let timeoutId: number;
   const animation: Animation = { ...baseAnimation, ...userAnimation };
+  const interval = 1000 / animation.frameRate;
   canvas.width = animation.columns;
   canvas.height = animation.rows;
   const context = canvas.getContext("2d");
-  const getAnimator = () => animator(animation);
-  let frames = getAnimator();
+  let frameGenerator = animator(animation);
 
-  function schedule(fn: any) {
-    setTimeout(fn, 1000 / animation.frameRate);
-  }
-
-  function paint(frameNumber: number) {
-    const frame = frames.next();
-    imageData = frame.value;
-    if (frame.done) {
-      frames = getAnimator();
-      imageData = frames.next().value;
+  function paint() {
+    const frame = frameGenerator.next();
+    if (frame.done || !context) return;
+    imageData = new ImageData(frame.value, animation.columns, animation.rows);
+    context.putImageData(imageData, 0, 0);
+    if (playing) {
+      // @ts-ignore FIXME "Type NodeJS.Timeout is not assignable to number"
+      timeoutId = setTimeout(() => requestAnimationFrame(paint), interval);
     }
-    // @ts-ignore
-    context.putImageData(
-      // @ts-ignore
-      new ImageData(imageData, animation.columns, animation.rows),
-      0,
-      0,
-    );
-    if (playing)
-      schedule(() => {
-        currentAnimationFrame = requestAnimationFrame(() =>
-          paint((frameNumber + 1) % animation.frames),
-        );
-      });
   }
+
+  // Perform initial paint
+  if (playing) paint();
 
   return {
     play: () => {
       playing = true;
-      paint(0);
+      paint();
     },
     pause: () => {
+      clearTimeout(timeoutId);
       playing = false;
     },
     next: () => {
       playing = false;
-      paint(0);
+      paint();
     },
     playing: () => playing,
   };

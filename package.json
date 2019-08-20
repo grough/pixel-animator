@@ -1,7 +1,7 @@
 {
   "name": "pixel-animator",
-  "description": "A tool for creating low-res animations",
-  "version": "0.0.6",
+  "description": "A tool for creating small pixel-based animations",
+  "version": "0.0.7",
   "author": "Gavin Rough <gavin@grough.com>",
   "repository": {
     "type": "git",

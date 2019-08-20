@@ -5,11 +5,10 @@ export const baseAnimation: Animation = {
   rows: 16,
   frames: 16,
   frameRate: 8,
-  colorize: ({ column, row, frame }) => {
-    return Math.floor(column + row + frame / 8) % 2 === 0
+  colorize: ({ column, row, frame }) =>
+    Math.floor(column + row + frame / 8) % 2 === 0
       ? frame % 2 === 0
-        ? 0xf0
-        : 0xea
-      : 0xf8;
-  },
+        ? 0.92
+        : 0.94
+      : 0.975,
 };
