@@ -1,4 +1,4 @@
-import { mod, createCellReader, animator } from ".";
+import { mod, createCellReader, animator, normalizeColor } from "./index";
 
 it("should wrap positive and negative numbers", () => {
   expect(mod(5, 4)).toBe(1);
@@ -22,6 +22,15 @@ it("should create an array accessor", () => {
   expect(cells(2, 1)).toBe(2);
   expect(cells(2, 5)).toBe(2);
   expect(cells(2, -3)).toBe(2);
+});
+
+it("should normalize color inputs", () => {
+  expect(normalizeColor(0)).toEqual({ red: 0, green: 0, blue: 0 });
+  expect(normalizeColor(1)).toEqual({ red: 1, green: 1, blue: 1 });
+  expect(normalizeColor({ red: 1 })).toEqual({ red: 1, green: 0, blue: 0 });
+  expect(normalizeColor("#FF0000")).toEqual({ red: 1, green: 0, blue: 0 });
+  expect(normalizeColor("00FF00")).toEqual({ red: 0, green: 1, blue: 0 });
+  expect(normalizeColor("0000ff")).toEqual({ red: 0, green: 0, blue: 1 });
 });
 
 it("should generate a stateless 2×2×2 animation", () => {

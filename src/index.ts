@@ -38,7 +38,10 @@ export type UserAnimation<Cell = FrameContext> = {
   colorize: Colorizer<Cell>;
 };
 
-type UserColor = { red?: number; green?: number; blue?: number } | number;
+type UserColor =
+  | { red?: number; green?: number; blue?: number }
+  | number
+  | string;
 
 type Color = { red: number; green: number; blue: number };
 
@@ -65,9 +68,37 @@ export function createCellReader<Cell>(
   return (column, row) => cellData[index(column, row, columns, rows)];
 }
 
-function normalizeColor(color: UserColor): Color {
+function decimalToRgb(
+  decimal: number,
+): { red: number; green: number; blue: number } {
+  return {
+    red: (decimal >> 16) & 0xff,
+    green: (decimal >> 8) & 0xff,
+    blue: decimal & 0xff,
+  };
+}
+
+function stringToColor(userString: string): Color {
+  const n =
+    userString.indexOf("#") === 0 ? userString.substring(1) : userString;
+  if (n.length > 6) {
+    return { red: 0, green: 0, blue: 0 };
+  }
+  const decimal = parseInt(n, 16);
+  const { red, green, blue } = decimalToRgb(decimal);
+  return {
+    red: red / 255,
+    green: green / 255,
+    blue: blue / 255,
+  };
+}
+
+export function normalizeColor(color: UserColor): Color {
   if (typeof color === "number") {
     return { red: color, green: color, blue: color };
+  }
+  if (typeof color === "string") {
+    return stringToColor(color);
   }
   return { red: 0, green: 0, blue: 0, ...color };
 }
