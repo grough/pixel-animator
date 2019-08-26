@@ -1,4 +1,4 @@
-import { mod, createCellReader, animator, normalizeColor } from "./index";
+import { mod, createCellReader, animator, normalizeColor } from "./animator";
 
 it("should wrap positive and negative numbers", () => {
   expect(mod(5, 4)).toBe(1);
@@ -34,11 +34,11 @@ it("should normalize color inputs", () => {
 });
 
 it("should generate a stateless 2×2×2 animation", () => {
-  // @ts-ignore
   const gen = animator({
     columns: 2,
     rows: 2,
     frames: 2,
+    frameRate: 1,
     colorize: ({ column, row, frame, columns, rows, frames }) => ({
       red: column / columns,
       green: row / rows,
@@ -66,11 +66,11 @@ it("should generate a stateless 2×2×2 animation", () => {
 });
 
 it("should generate a stateful/evolving 2×2×2 animation", () => {
-  // @ts-ignore
   const gen = animator<boolean>({
     columns: 2,
     rows: 2,
     frames: 2,
+    frameRate: 1,
     evolve: ({ column, row, frame, cells }) => {
       if (frame === 0) return false;
       return !cells(column, row);

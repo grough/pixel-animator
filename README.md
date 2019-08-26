@@ -1,4 +1,6 @@
-**[pixel-animator](https://www.npmjs.com/package/pixel-animator)** is a library for creating small, colorful, pixel-based animations with JavaScript. It's pretty much the same idea as a [fragment shader](https://en.wikipedia.org/wiki/Shader#Pixel_shaders) from graphics programming, but much, much slower.
+**pixel-animator** is a library for creating small, colorful, pixel-based animations with JavaScript. It's pretty much the same idea as a [fragment shader](https://en.wikipedia.org/wiki/Shader#Pixel_shaders) from graphics programming, but much slower and maybe more fun to write.
+
+![Rainbow sine wave 256×5×16](examples/1567268372138.gif)
 
 _This guide is a work in progress and only essential features are covered for now_.
 
@@ -6,13 +8,13 @@ _This guide is a work in progress and only essential features are covered for no
 
 All you need to start animating pixels is an [HTML canvas](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) and a special kind of function that we'll call `colorize`.
 
-Each pixel in an animation belongs a unique coordinate identified by a `column`, `row` and `frame`. The purpose of your `colorize` function is to take a single coordinate and assign a colored pixel to it. Your function will automatically be run for every coordinate in the animation. The result is what you see on the canvas.
+Each pixel in an animation belongs a unique coordinate identified by a `column`, `row` and `frame`. The purpose of the `colorize` function is to take a single coordinate and assign a colored pixel to it. Your function will automatically be run for every coordinate in the animation and the result is rendered on the canvas.
 
 ### Example 1: White pixel blinking on a grey background
 
 ![White pixel blinking on a grey background 8×8×2](examples/1566165863155.gif)
 
-```typescript
+```javascript
 import { render } from "pixel-animator";
 
 function colorize({ column, row, frame }) {
@@ -30,7 +32,7 @@ render({ colorize }, document.getElementById("my-canvas"));
 
 In this function, each pixel says to itself: _If I'm in the sixth column, third row, and my frame number is even, I should be white. If not, make me dark grey_. The values `1` and `0.25` represent white and dark grey.
 
-We also included some extra code that's needed to connect the function to a canvas.
+The example also includes some code needed to connect the function to a canvas.
 
 ---
 
@@ -38,7 +40,7 @@ We also included some extra code that's needed to connect the function to a canv
 
 ![Green pixel moving across a blue background 8×8×8](examples/1566159876842.gif)
 
-```typescript
+```javascript
 function colorize({ column, row, frame }) {
   if (column === frame && row === frame) return { green: 1 };
   return { blue: 0.5 };
@@ -55,7 +57,7 @@ Here each pixel says to itself: _If both my column and row numbers are equal to 
 
 ![Animated Gradient 8×8×8](examples/1566072376597.gif)
 
-```typescript
+```javascript
 function colorize({
   // Current pixel coordinates
   column,

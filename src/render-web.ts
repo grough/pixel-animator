@@ -1,4 +1,4 @@
-import { animator, Animation, UserAnimation } from ".";
+import { animator, Animation, UserAnimation } from "./animator";
 import { baseAnimation } from "./defaults";
 
 export function render(

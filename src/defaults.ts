@@ -1,9 +1,9 @@
-import { Animation } from "./index";
+import { Animation } from "./animator";
 
 export const baseAnimation: Animation = {
   columns: 16,
   rows: 16,
-  frames: 16,
+  frames: Infinity,
   frameRate: 8,
   colorize: ({ column, row, frame }) =>
     Math.floor(column + row + frame / 8) % 2 === 0
