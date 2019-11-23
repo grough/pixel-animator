@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should generate a stateful or evolving 2×2×2 animation: first frame 1`] = `
+<div
+  class=" pixel-animator"
+  id="root"
+>
+  <div
+    class="pa-cell pa-cell-0"
+    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+  />
+  <div
+    class="pa-cell pa-cell-1"
+    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+  />
+  <div
+    class="pa-cell pa-cell-2"
+    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+  />
+  <div
+    class="pa-cell pa-cell-3"
+    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+  />
+</div>
+`;
+
+exports[`should generate a stateful or evolving 2×2×2 animation: second frame 1`] = `
+<div
+  class=" pixel-animator"
+  id="root"
+>
+  <div
+    class="pa-cell pa-cell-0"
+    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+  />
+  <div
+    class="pa-cell pa-cell-1"
+    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+  />
+  <div
+    class="pa-cell pa-cell-2"
+    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+  />
+  <div
+    class="pa-cell pa-cell-3"
+    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+  />
+</div>
+`;
+
+exports[`should generate a stateless 2×2×2 animation: first frame 1`] = `
+<div
+  class=" pixel-animator"
+  id="root"
+>
+  <div
+    class="pa-cell pa-cell-0"
+    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+  />
+  <div
+    class="pa-cell pa-cell-1"
+    style="width: 50%; height: 50%; background-color: rgb(127, 0, 0);"
+  />
+  <div
+    class="pa-cell pa-cell-2"
+    style="width: 50%; height: 50%; background-color: rgb(0, 127, 0);"
+  />
+  <div
+    class="pa-cell pa-cell-3"
+    style="width: 50%; height: 50%; background-color: rgb(127, 127, 0);"
+  />
+</div>
+`;
+
+exports[`should generate a stateless 2×2×2 animation: second frame 1`] = `
+<div
+  class=" pixel-animator"
+  id="root"
+>
+  <div
+    class="pa-cell pa-cell-0"
+    style="width: 50%; height: 50%; background-color: rgb(0, 0, 127);"
+  />
+  <div
+    class="pa-cell pa-cell-1"
+    style="width: 50%; height: 50%; background-color: rgb(127, 0, 127);"
+  />
+  <div
+    class="pa-cell pa-cell-2"
+    style="width: 50%; height: 50%; background-color: rgb(0, 127, 127);"
+  />
+  <div
+    class="pa-cell pa-cell-3"
+    style="width: 50%; height: 50%; background-color: rgb(127, 127, 127);"
+  />
+</div>
+`;

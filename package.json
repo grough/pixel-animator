@@ -1,31 +1,25 @@
 {
   "name": "pixel-animator",
-  "description": "Generative pixel animations with JavaScript",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "author": "Gavin Rough <gavin@grough.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/grough/pixel-animator"
-  },
-  "license": "MIT",
-  "main": "dist/index.js",
+  "description": "Make generative pixel animations in your web browser",
+  "main": "pixel-animator.js",
   "scripts": {
-    "build": "rm -rf dist/* && tsc",
     "test": "jest --watchAll"
   },
   "files": [
-    "dist"
+    "pixel-animator.js",
+    "pixel-animator.css",
+    "example.html"
   ],
+  "keywords": [
+    "animation",
+    "pixel art",
+    "generative art",
+    "cellular automata"
+  ],
+  "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^24.0.0",
-    "@types/node": "^11.9.4",
-    "jest": "^23.0.0",
-    "prettier": "^1.16.4",
-    "ts-jest": "^23.10.5",
-    "typescript": "^3.3.3"
-  },
-  "prettier": {
-    "trailingComma": "all",
-    "printWidth": 80
+    "jest": "^24.9.0"
   }
 }

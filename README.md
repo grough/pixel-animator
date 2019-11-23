@@ -6,16 +6,33 @@ _This guide is a work in progress and only essential features are covered for no
 
 ## Getting Started
 
-All you need to start animating pixels is an [HTML canvas](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) and a special kind of function that we'll call `colorize`.
+The quickest way to get started is to load the JS and CSS from the web onto your own HTML page. The JS will define a global variable called `PixelAnimator` that you can work with.
 
-Each pixel in an animation belongs a unique coordinate identified by a `column`, `row` and `frame`. The purpose of the `colorize` function is to take a single coordinate and assign a colored pixel to it. Your function will automatically be run for every coordinate in the animation and the result is rendered on the canvas.
+```html
+<html>
+  <head>
+    <!-- Load the JavaScript and CSS -->
+    <script src="https://unpkg.com/pixel-animator/pixel-animator.js"></script>
+    <link href="https://unpkg.com/pixel-animator/pixel-animator.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Insert a default animation inside the div#root element above
+      PixelAnimator({}, document.getElementById("root"));
+    </script>
+  </body>
+</html>
+```
+
+Once you have this set up, all you need to do is write a special kind of function that we'll call `colorize`. Each pixel in an animation belongs a unique coordinate identified by a `column`, `row` and `frame`. The purpose of the `colorize` function is to take a single coordinate and assign a colored pixel to it. Your function will automatically be run for every coordinate in the animation and the result is rendered on your page.
 
 ### Example 1: White pixel blinking on a grey background
 
 ![White pixel blinking on a grey background 8×8×2](examples/1566165863155.gif)
 
 ```javascript
-import { render } from "pixel-animator";
+const PixelAnimator = require("pixel-animator");
 
 function colorize({ column, row, frame }) {
   if (column === 5 && row === 2 && frame % 2 === 0) {
@@ -25,7 +42,7 @@ function colorize({ column, row, frame }) {
   }
 }
 
-render({ colorize }, document.getElementById("my-canvas"));
+PixelAnimator({ colorize }, document.getElementById("root"));
 ```
 
 [[Run this code](https://codesandbox.io/s/bright-green-dot-blinking-on-a-dark-blue-background-9dwjg)]
@@ -66,26 +83,14 @@ function colorize({
   // Overall dimensions for comparison
   columns,
   rows,
-  frames,
+  frames
 }) {
   return {
     red: column / columns,
     green: row / rows,
-    blue: frame / frames,
+    blue: frame / frames
   };
 }
 ```
 
 [[Run this code](https://codesandbox.io/s/example-animated-gradient-c0gnl)]
-
-## Dealing with a blurry canvas
-
-You might notice that things don't look so sharp when rendering to your canvas element. The following CSS will stop the browser from smoothing things out as you scale the canvas up:
-
-```css
-canvas {
-  width: 320px;
-  height: 320px;
-  image-rendering: pixelated;
-}
-```

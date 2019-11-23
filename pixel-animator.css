@@ -1,0 +1,7 @@
+.pixel-animator {
+  width: 320px;
+  height: 320px;
+}
+.pixel-animator .pa-cell {
+  display: inline-block;
+}
