@@ -95,3 +95,52 @@ exports[`should generate a stateless 2×2×2 animation: second frame 1`] = `
   />
 </div>
 `;
+
+exports[`should iterate over frames 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": 0,
+      "green": 0,
+      "red": 0,
+    },
+    Object {
+      "blue": 0,
+      "green": 0,
+      "red": 0.5,
+    },
+    Object {
+      "blue": 0,
+      "green": 0.5,
+      "red": 0,
+    },
+    Object {
+      "blue": 0,
+      "green": 0.5,
+      "red": 0.5,
+    },
+  ],
+  Array [
+    Object {
+      "blue": 0.5,
+      "green": 0,
+      "red": 0,
+    },
+    Object {
+      "blue": 0.5,
+      "green": 0,
+      "red": 0.5,
+    },
+    Object {
+      "blue": 0.5,
+      "green": 0.5,
+      "red": 0,
+    },
+    Object {
+      "blue": 0.5,
+      "green": 0.5,
+      "red": 0.5,
+    },
+  ],
+]
+`;

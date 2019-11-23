@@ -1,5 +1,23 @@
 const PixelAnimator = require("../pixel-animator");
 
+it("should iterate over frames", () => {
+  const frameIterator = PixelAnimator({
+    columns: 2,
+    rows: 2,
+    frames: 2,
+    colorize: ({ column, row, frame, columns, rows, frames }) => ({
+      red: column / columns,
+      green: row / rows,
+      blue: frame / frames
+    })
+  });
+  const frame1 = frameIterator();
+  const frame2 = frameIterator();
+  const frame3 = frameIterator();
+  expect([frame1, frame2]).toMatchSnapshot();
+  expect(frame1).toEqual(frame3);
+});
+
 it("should generate a stateless 2×2×2 animation", () => {
   document.body.innerHTML = `<div id="root"></div>`;
   const rootElement = document.getElementById("root");

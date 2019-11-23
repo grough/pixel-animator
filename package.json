@@ -1,8 +1,12 @@
 {
   "name": "pixel-animator",
-  "version": "1.0.0",
-  "author": "Gavin Rough <gavin@grough.com>",
+  "version": "1.1.1",
   "description": "Make generative pixel animations in your web browser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grough/pixel-animator"
+  },
+  "author": "Gavin Rough <gavin@grough.com>",
   "main": "pixel-animator.js",
   "scripts": {
     "test": "jest --watchAll"

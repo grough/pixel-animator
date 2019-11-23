@@ -1,4 +1,3 @@
-// Pixel Animator version 1.0.0
 // https://github.com/grough/pixel-animator
 (function(root, factory) {
   if (typeof define === "function" && define.amd) define([], factory);
@@ -103,19 +102,18 @@
   };
 
   /**
-   * Return a function that when called will advance to the next animation
-   * frame, calculate each cell colour, and render all the colours using the
-   * provided `render` function. Any subsequent call to the returned function
-   * will advance and render the next frame.
+   * Return a function that, when called, will advance to the next animation
+   * frame, calculate all the cell colours for that frame and return them.
+   * Calling the function again with return the subsequent frame, and so on.
    */
-  function createAnimationRenderer(animation, render) {
+  function createFrameIterator(animation) {
     const { columns, rows, frames, evolve, colorize } = animation;
     let cellData = [];
     let cellDataPrevious;
     let cellColors;
     let cellReader;
     let frame = 0;
-    return function renderNextFrame() {
+    return function generateNextFrame() {
       cellDataPrevious = cellData;
       cellReader = createCellReader(columns, rows, cellDataPrevious);
       cellData = [];
@@ -137,13 +135,12 @@
           cellColors = cellColors.concat(normalizeColor(color));
         }
       }
-      render(cellColors);
-      frame += 1;
+      frame++;
+      return cellColors;
     };
   }
 
-  function renderAnimation(userAnimation, rootElement) {
-    const animation = Object.assign({}, baseAnimation, userAnimation);
+  function renderAnimatedDom(animation, rootElement) {
     rootElement.classList = rootElement.classList + " pixel-animator";
     const widthStyle = (1 / animation.columns) * 100 + "%";
     const heightStyle = (1 / animation.rows) * 100 + "%";
@@ -154,24 +151,30 @@
       cellElement.style.height = heightStyle;
       rootElement.appendChild(cellElement);
     }
-    function renderFrame(colors) {
-      colors.forEach((color, index) => {
-        const cellElement = rootElement.children[index];
-        cellElement.style.backgroundColor =
-          "rgb(" +
-          [
-            Math.floor(color.red * 255),
-            Math.floor(color.green * 255),
-            Math.floor(color.blue * 255)
-          ].join(",") +
-          ")";
-      });
-    }
-    const renderNextFrame = createAnimationRenderer(animation, renderFrame);
-    const transport = createLooper(1000 / animation.frameRate, renderNextFrame);
+    const frameIterator = createFrameIterator(animation);
+    const transport = createLooper(
+      1000 / animation.frameRate,
+      function renderNextFrame() {
+        frameIterator().forEach((color, index) => {
+          const cellElement = rootElement.children[index];
+          cellElement.style.backgroundColor =
+            "rgb(" +
+            [
+              Math.floor(color.red * 255),
+              Math.floor(color.green * 255),
+              Math.floor(color.blue * 255)
+            ].join(",") +
+            ")";
+        });
+      }
+    );
     transport.play();
     return transport;
   }
 
-  return renderAnimation;
+  return function PixelAnimator(userAnimation, domNode) {
+    const animation = Object.assign({}, baseAnimation, userAnimation);
+    if (domNode) return renderAnimatedDom(animation, domNode);
+    return createFrameIterator(animation);
+  };
 });
