@@ -25,7 +25,7 @@ The quickest way to get started is to load the JS and CSS from the web onto your
 </html>
 ```
 
-Once you have this set up, all you need to do is write a special kind of function that we'll call `colorize`. Each pixel in an animation belongs a unique coordinate identified by a `column`, `row` and `frame`. The purpose of the `colorize` function is to take a single coordinate and assign a colored pixel to it. Your function will automatically be run for every coordinate in the animation and the result is rendered on your page.
+Once you have this set up, all you need to do is write a special type of function called `colorize`. The purpose of the `colorize` function is to transform each pixel's position in space and time into a color. Each pixel in an animation belongs to a distinct position in space and time identified by its `column`, `row` and `frame`. Your `colorize` function will run automatically for every coordinate in the animation, rendering animated colored squares on the page.
 
 ### Example 1: White pixel blinking on a grey background
 

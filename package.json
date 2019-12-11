@@ -1,6 +1,6 @@
 {
   "name": "pixel-animator",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "description": "Make generative pixel animations in your web browser",
   "repository": {
     "type": "git",

@@ -24,35 +24,55 @@
     };
   }
 
+  const baseColor = { red: 0, green: 0, blue: 0, alpha: 1 };
+
+  /**
+   * Convert a RGB hexadecimal color string to RGBA components in range 0..1.
+   * The alpha channel is ignored and made opaque.
+   */
   function stringToColor(userHex) {
     const hex = userHex.indexOf("#") === 0 ? userHex.substring(1) : userHex;
-    if (hex.length > 6) {
-      return { red: 0, green: 0, blue: 0 };
-    }
+    if (hex.length > 6) return baseColor;
     const decimal = parseInt(hex, 16);
     const { red, green, blue } = decimalToRgb(decimal);
     return {
       red: red / 255,
       green: green / 255,
-      blue: blue / 255
+      blue: blue / 255,
+      alpha: 1
     };
   }
 
+  /*
+   * Normalize a color given in one of the following formats:
+   *
+   * - A number is treated as a grayscale value.
+   * - A string is treated as a hexadecimal RGB color code (no alpha for now).
+   * - null is treated as transparent.
+   *
+   * Anything else is assumed to be an object containing  RGBA components in the
+   * range 0..1. Any missing components are filled in from `baseColor`.
+   */
   function normalizeColor(color) {
     if (typeof color === "number") {
-      return { red: color, green: color, blue: color };
+      return { red: color, green: color, blue: color, alpha: 1 };
     }
     if (typeof color === "string") {
       return stringToColor(color);
     }
-    return { red: 0, green: 0, blue: 0, ...color };
+    if (color === null) {
+      return Object.assign({}, baseColor, { alpha: 0 });
+    }
+    return Object.assign({}, baseColor, color, {
+      alpha: typeof color.alpha === "number" ? Math.round(color.alpha) : 1
+    });
   }
 
-  /**
+  /*
    * Schedule a callback function for execution on an interval in milliseconds.
-   * Similar to `setInterval` but it can be controlled using the returned
-   * transport object. `requestAnimationFrame` should prevent calls while the
-   * page is in the background.
+   * Similar to `setInterval` but can be controlled using the returned transport
+   * object. `requestAnimationFrame` is meant to prevent calls while the page is
+   * in the background.
    */
   function createLooper(interval, callback) {
     let playing;
@@ -84,9 +104,9 @@
     };
   }
 
-  /**
-   * Here's a default animation that will render if no user animation is
-   * provided. It looks like an alternating checkerboard.
+  /*
+   * This is a default animation that will render if no user animation is
+   * given. It looks like an alternating checkerboard.
    */
   const baseAnimation = {
     columns: 16,
@@ -101,10 +121,10 @@
         : 0.975
   };
 
-  /**
+  /*
    * Return a function that, when called, will advance to the next animation
    * frame, calculate all the cell colours for that frame and return them.
-   * Calling the function again with return the subsequent frame, and so on.
+   * Calling the function again will return the subsequent frame, and so on.
    */
   function createFrameIterator(animation) {
     const { columns, rows, frames, evolve, colorize } = animation;
@@ -158,11 +178,12 @@
         frameIterator().forEach((color, index) => {
           const cellElement = rootElement.children[index];
           cellElement.style.backgroundColor =
-            "rgb(" +
+            "rgba(" +
             [
               Math.floor(color.red * 255),
               Math.floor(color.green * 255),
-              Math.floor(color.blue * 255)
+              Math.floor(color.blue * 255),
+              color.alpha
             ].join(",") +
             ")";
         });

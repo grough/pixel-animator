@@ -100,21 +100,25 @@ exports[`should iterate over frames 1`] = `
 Array [
   Array [
     Object {
+      "alpha": 1,
       "blue": 0,
       "green": 0,
       "red": 0,
     },
     Object {
+      "alpha": 1,
       "blue": 0,
       "green": 0,
       "red": 0.5,
     },
     Object {
+      "alpha": 1,
       "blue": 0,
       "green": 0.5,
       "red": 0,
     },
     Object {
+      "alpha": 1,
       "blue": 0,
       "green": 0.5,
       "red": 0.5,
@@ -122,21 +126,25 @@ Array [
   ],
   Array [
     Object {
+      "alpha": 1,
       "blue": 0.5,
       "green": 0,
       "red": 0,
     },
     Object {
+      "alpha": 1,
       "blue": 0.5,
       "green": 0,
       "red": 0.5,
     },
     Object {
+      "alpha": 1,
       "blue": 0.5,
       "green": 0.5,
       "red": 0,
     },
     Object {
+      "alpha": 1,
       "blue": 0.5,
       "green": 0.5,
       "red": 0.5,
