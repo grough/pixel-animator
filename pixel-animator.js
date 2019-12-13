@@ -13,7 +13,9 @@
   }
 
   function createCellReader(columns, rows, cellData) {
-    return (column, row) => cellData[index(column, row, columns, rows)];
+    return function(column, row) {
+      return cellData[index(column, row, columns, rows)];
+    };
   }
 
   function decimalToRgb(decimal) {
@@ -24,21 +26,21 @@
     };
   }
 
-  const baseColor = { red: 0, green: 0, blue: 0, alpha: 1 };
+  var baseColor = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   /**
    * Convert a RGB hexadecimal color string to RGBA components in range 0..1.
    * The alpha channel is ignored and made opaque.
    */
   function stringToColor(userHex) {
-    const hex = userHex.indexOf("#") === 0 ? userHex.substring(1) : userHex;
+    var hex = userHex.indexOf("#") === 0 ? userHex.substring(1) : userHex;
     if (hex.length > 6) return baseColor;
-    const decimal = parseInt(hex, 16);
-    const { red, green, blue } = decimalToRgb(decimal);
+    var decimal = parseInt(hex, 16);
+    var color = decimalToRgb(decimal);
     return {
-      red: red / 255,
-      green: green / 255,
-      blue: blue / 255,
+      red: color.red / 255,
+      green: color.green / 255,
+      blue: color.blue / 255,
       alpha: 1
     };
   }
@@ -75,32 +77,34 @@
    * in the background.
    */
   function createLooper(interval, callback) {
-    let playing;
-    let timeoutId;
+    var playing;
+    var timeoutId;
 
     function loop() {
-      requestAnimationFrame(() => {
+      requestAnimationFrame(function next() {
         callback();
         timeoutId = setTimeout(loop, interval);
       });
     }
 
     return {
-      play: () => {
+      play: function() {
         playing = true;
         clearTimeout(timeoutId);
         timeoutId = loop();
       },
-      pause: () => {
+      pause: function() {
         playing = false;
         clearTimeout(timeoutId);
       },
-      next: () => {
+      next: function() {
         playing = false;
         clearTimeout(timeoutId);
         callback();
       },
-      playing: () => playing
+      playing: function() {
+        return playing;
+      }
     };
   }
 
@@ -108,17 +112,20 @@
    * This is a default animation that will render if no user animation is
    * given. It looks like an alternating checkerboard.
    */
-  const baseAnimation = {
+  var baseAnimation = {
     columns: 16,
     rows: 16,
     frames: Infinity,
     frameRate: 8,
-    colorize: ({ column, row, frame }) =>
-      Math.floor(column + row + frame / 8) % 2 === 0
-        ? frame % 2 === 0
+    colorize: function(context) {
+      return Math.floor(context.column + context.row + context.frame / 8) %
+        2 ===
+        0
+        ? context.frame % 2 === 0
           ? 0.92
           : 0.94
-        : 0.975
+        : 0.975;
+    }
   };
 
   /*
@@ -127,31 +134,34 @@
    * Calling the function again will return the subsequent frame, and so on.
    */
   function createFrameIterator(animation) {
-    const { columns, rows, frames, evolve, colorize } = animation;
-    let cellData = [];
-    let cellDataPrevious;
-    let cellColors;
-    let cellReader;
-    let frame = 0;
+    var cellData = [];
+    var cellDataPrevious;
+    var cellColors;
+    var cellReader;
+    var frame = 0;
     return function generateNextFrame() {
       cellDataPrevious = cellData;
-      cellReader = createCellReader(columns, rows, cellDataPrevious);
+      cellReader = createCellReader(
+        animation.columns,
+        animation.rows,
+        cellDataPrevious
+      );
       cellData = [];
       cellColors = [];
-      for (let row = 0; row < rows; row++) {
-        for (let column = 0; column < columns; column++) {
-          const context = {
-            columns,
-            rows,
-            frames,
-            column,
-            row,
-            frame: frame % frames,
+      for (var row = 0; row < animation.rows; row++) {
+        for (var column = 0; column < animation.columns; column++) {
+          var context = {
+            columns: animation.columns,
+            rows: animation.rows,
+            frames: animation.frames,
+            column: column,
+            row: row,
+            frame: frame % animation.frames,
             cells: cellReader
           };
-          const cell = evolve ? evolve(context) : context;
+          var cell = animation.evolve ? animation.evolve(context) : context;
           cellData.push(cell);
-          const color = colorize(cell);
+          var color = animation.colorize(cell);
           cellColors = cellColors.concat(normalizeColor(color));
         }
       }
@@ -162,21 +172,21 @@
 
   function renderAnimatedDom(animation, rootElement) {
     rootElement.classList = rootElement.classList + " pixel-animator";
-    const widthStyle = (1 / animation.columns) * 100 + "%";
-    const heightStyle = (1 / animation.rows) * 100 + "%";
-    for (let index = 0; index < animation.rows * animation.columns; index++) {
-      const cellElement = document.createElement("div");
+    var widthStyle = (1 / animation.columns) * 100 + "%";
+    var heightStyle = (1 / animation.rows) * 100 + "%";
+    for (var index = 0; index < animation.rows * animation.columns; index++) {
+      var cellElement = document.createElement("div");
       cellElement.classList = "pa-cell " + "pa-cell-" + index;
       cellElement.style.width = widthStyle;
       cellElement.style.height = heightStyle;
       rootElement.appendChild(cellElement);
     }
-    const frameIterator = createFrameIterator(animation);
-    const transport = createLooper(
+    var frameIterator = createFrameIterator(animation);
+    var transport = createLooper(
       1000 / animation.frameRate,
       function renderNextFrame() {
-        frameIterator().forEach((color, index) => {
-          const cellElement = rootElement.children[index];
+        frameIterator().forEach(function(color, index) {
+          var cellElement = rootElement.children[index];
           cellElement.style.backgroundColor =
             "rgba(" +
             [
@@ -194,7 +204,7 @@
   }
 
   return function PixelAnimator(userAnimation, domNode) {
-    const animation = Object.assign({}, baseAnimation, userAnimation);
+    var animation = Object.assign({}, baseAnimation, userAnimation);
     if (domNode) return renderAnimatedDom(animation, domNode);
     return createFrameIterator(animation);
   };

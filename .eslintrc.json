@@ -1,0 +1,7 @@
+{
+  "extends": ["plugin:compat/recommended"],
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}
