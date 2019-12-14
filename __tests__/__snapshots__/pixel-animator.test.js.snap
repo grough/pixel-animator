@@ -1,97 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should generate a stateful or evolving 2×2×2 animation: first frame 1`] = `
+exports[`should generate HTML when given a DOM node: first frame 1`] = `
 <div
   class=" pixel-animator"
   id="root"
+  style="width: 320px; height: 320px;"
 >
   <div
     class="pa-cell pa-cell-0"
-    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 0, 0);"
   />
   <div
     class="pa-cell pa-cell-1"
-    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 0, 0);"
   />
   <div
     class="pa-cell pa-cell-2"
-    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 127, 0);"
   />
   <div
     class="pa-cell pa-cell-3"
-    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 127, 0);"
   />
 </div>
 `;
 
-exports[`should generate a stateful or evolving 2×2×2 animation: second frame 1`] = `
+exports[`should generate HTML when given a DOM node: second frame 1`] = `
 <div
   class=" pixel-animator"
   id="root"
+  style="width: 320px; height: 320px;"
 >
   <div
     class="pa-cell pa-cell-0"
-    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 0, 127);"
   />
   <div
     class="pa-cell pa-cell-1"
-    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 0, 127);"
   />
   <div
     class="pa-cell pa-cell-2"
-    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 127, 127);"
   />
   <div
     class="pa-cell pa-cell-3"
-    style="width: 50%; height: 50%; background-color: rgb(255, 255, 255);"
-  />
-</div>
-`;
-
-exports[`should generate a stateless 2×2×2 animation: first frame 1`] = `
-<div
-  class=" pixel-animator"
-  id="root"
->
-  <div
-    class="pa-cell pa-cell-0"
-    style="width: 50%; height: 50%; background-color: rgb(0, 0, 0);"
-  />
-  <div
-    class="pa-cell pa-cell-1"
-    style="width: 50%; height: 50%; background-color: rgb(127, 0, 0);"
-  />
-  <div
-    class="pa-cell pa-cell-2"
-    style="width: 50%; height: 50%; background-color: rgb(0, 127, 0);"
-  />
-  <div
-    class="pa-cell pa-cell-3"
-    style="width: 50%; height: 50%; background-color: rgb(127, 127, 0);"
-  />
-</div>
-`;
-
-exports[`should generate a stateless 2×2×2 animation: second frame 1`] = `
-<div
-  class=" pixel-animator"
-  id="root"
->
-  <div
-    class="pa-cell pa-cell-0"
-    style="width: 50%; height: 50%; background-color: rgb(0, 0, 127);"
-  />
-  <div
-    class="pa-cell pa-cell-1"
-    style="width: 50%; height: 50%; background-color: rgb(127, 0, 127);"
-  />
-  <div
-    class="pa-cell pa-cell-2"
-    style="width: 50%; height: 50%; background-color: rgb(0, 127, 127);"
-  />
-  <div
-    class="pa-cell pa-cell-3"
-    style="width: 50%; height: 50%; background-color: rgb(127, 127, 127);"
+    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 127, 127);"
   />
 </div>
 `;
@@ -148,6 +102,63 @@ Array [
       "blue": 0.5,
       "green": 0.5,
       "red": 0.5,
+    },
+  ],
+]
+`;
+
+exports[`should maintain state between frames 1`] = `
+Array [
+  Array [
+    Object {
+      "alpha": 0,
+      "blue": 0.5,
+      "green": 0.4,
+      "red": 0,
+    },
+    Object {
+      "alpha": 0,
+      "blue": 0.5,
+      "green": 0.4,
+      "red": 0,
+    },
+    Object {
+      "alpha": 0,
+      "blue": 0.5,
+      "green": 0.4,
+      "red": 0,
+    },
+    Object {
+      "alpha": 0,
+      "blue": 0.5,
+      "green": 0.4,
+      "red": 0,
+    },
+  ],
+  Array [
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
+      "red": 1,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
+      "red": 1,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
+      "red": 1,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
+      "red": 1,
     },
   ],
 ]

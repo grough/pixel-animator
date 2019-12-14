@@ -16,6 +16,17 @@
     return (column, row) => cellData[index(column, row, columns, rows)];
   }
 
+  function fit(columns, rows, target) {
+    const scale = target / Math.max(columns, rows);
+    if (scale >= 1) {
+      return {
+        width: Math.floor(columns * scale),
+        height: Math.floor(rows * scale)
+      };
+    }
+    return { width: columns, height: rows };
+  }
+
   function decimalToRgb(decimal) {
     return {
       red: (decimal >> 16) & 255,
@@ -50,7 +61,7 @@
    * - A string is treated as a hexadecimal RGB color code (no alpha for now).
    * - null is treated as transparent.
    *
-   * Anything else is assumed to be an object containing  RGBA components in the
+   * Anything else is assumed to be an object containing RGBA components in the
    * range 0..1. Any missing components are filled in from `baseColor`.
    */
   function normalizeColor(color) {
@@ -162,13 +173,21 @@
 
   function renderAnimatedDom(animation, rootElement) {
     rootElement.classList = rootElement.classList + " pixel-animator";
-    const widthStyle = (1 / animation.columns) * 100 + "%";
-    const heightStyle = (1 / animation.rows) * 100 + "%";
+    const size = fit(
+      animation.columns,
+      animation.rows,
+      rootElement.clientWidth || 320
+    );
+    rootElement.style.width = size.width + "px";
+    rootElement.style.height = size.height + "px";
+    const cellWidth = (1 / animation.columns) * 100 + "%";
+    const cellHeight = (1 / animation.rows) * 100 + "%";
     for (let index = 0; index < animation.rows * animation.columns; index++) {
       const cellElement = document.createElement("div");
       cellElement.classList = "pa-cell " + "pa-cell-" + index;
-      cellElement.style.width = widthStyle;
-      cellElement.style.height = heightStyle;
+      cellElement.style.width = cellWidth;
+      cellElement.style.height = cellHeight;
+      cellElement.style.display = "inline-block";
       rootElement.appendChild(cellElement);
     }
     const frameIterator = createFrameIterator(animation);
