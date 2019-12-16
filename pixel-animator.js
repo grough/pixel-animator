@@ -188,6 +188,7 @@
       cellElement.style.width = cellWidth;
       cellElement.style.height = cellHeight;
       cellElement.style.display = "inline-block";
+      cellElement.style.verticalAlign = "top";
       rootElement.appendChild(cellElement);
     }
     const frameIterator = createFrameIterator(animation);

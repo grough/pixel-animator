@@ -8,19 +8,19 @@ exports[`should generate HTML when given a DOM node: first frame 1`] = `
 >
   <div
     class="pa-cell pa-cell-0"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 0, 0);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(0, 0, 0);"
   />
   <div
     class="pa-cell pa-cell-1"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 0, 0);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(127, 0, 0);"
   />
   <div
     class="pa-cell pa-cell-2"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 127, 0);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(0, 127, 0);"
   />
   <div
     class="pa-cell pa-cell-3"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 127, 0);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(127, 127, 0);"
   />
 </div>
 `;
@@ -33,19 +33,19 @@ exports[`should generate HTML when given a DOM node: second frame 1`] = `
 >
   <div
     class="pa-cell pa-cell-0"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 0, 127);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(0, 0, 127);"
   />
   <div
     class="pa-cell pa-cell-1"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 0, 127);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(127, 0, 127);"
   />
   <div
     class="pa-cell pa-cell-2"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(0, 127, 127);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(0, 127, 127);"
   />
   <div
     class="pa-cell pa-cell-3"
-    style="width: 50%; height: 50%; display: inline-block; background-color: rgb(127, 127, 127);"
+    style="width: 50%; height: 50%; display: inline-block; vertical-align: top; background-color: rgb(127, 127, 127);"
   />
 </div>
 `;
