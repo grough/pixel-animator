@@ -63,45 +63,45 @@ Array [
       "alpha": 1,
       "blue": 0,
       "green": 0,
-      "red": 0.5,
+      "red": 127,
     },
     Object {
       "alpha": 1,
       "blue": 0,
-      "green": 0.5,
+      "green": 127,
       "red": 0,
     },
     Object {
       "alpha": 1,
       "blue": 0,
-      "green": 0.5,
-      "red": 0.5,
+      "green": 127,
+      "red": 127,
     },
   ],
   Array [
     Object {
       "alpha": 1,
-      "blue": 0.5,
+      "blue": 127,
       "green": 0,
       "red": 0,
     },
     Object {
       "alpha": 1,
-      "blue": 0.5,
+      "blue": 127,
       "green": 0,
-      "red": 0.5,
+      "red": 127,
     },
     Object {
       "alpha": 1,
-      "blue": 0.5,
-      "green": 0.5,
+      "blue": 127,
+      "green": 127,
       "red": 0,
     },
     Object {
       "alpha": 1,
-      "blue": 0.5,
-      "green": 0.5,
-      "red": 0.5,
+      "blue": 127,
+      "green": 127,
+      "red": 127,
     },
   ],
 ]
@@ -111,54 +111,177 @@ exports[`should maintain state between frames 1`] = `
 Array [
   Array [
     Object {
-      "alpha": 0,
-      "blue": 0.5,
-      "green": 0.4,
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
       "red": 0,
     },
     Object {
-      "alpha": 0,
-      "blue": 0.5,
-      "green": 0.4,
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
       "red": 0,
     },
     Object {
-      "alpha": 0,
-      "blue": 0.5,
-      "green": 0.4,
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
       "red": 0,
     },
     Object {
-      "alpha": 0,
-      "blue": 0.5,
-      "green": 0.4,
+      "alpha": 1,
+      "blue": 0,
+      "green": 0,
       "red": 0,
     },
   ],
   Array [
     Object {
       "alpha": 1,
+      "blue": 255,
+      "green": 255,
+      "red": 255,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 255,
+      "green": 255,
+      "red": 255,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 255,
+      "green": 255,
+      "red": 255,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 255,
+      "green": 255,
+      "red": 255,
+    },
+  ],
+]
+`;
+
+exports[`should normalize color values: using a color name 1`] = `
+Array [
+  Object {
+    "alpha": 1,
+    "blue": 54,
+    "green": 65,
+    "red": 255,
+  },
+]
+`;
+
+exports[`should normalize color values: using a complete RGBA object 1`] = `
+Array [
+  Object {
+    "alpha": 0,
+    "blue": 76,
+    "green": 51,
+    "red": 25,
+  },
+]
+`;
+
+exports[`should normalize color values: using a hex code 1`] = `
+Array [
+  Object {
+    "alpha": 1,
+    "blue": 0,
+    "green": 0,
+    "red": 255,
+  },
+]
+`;
+
+exports[`should normalize color values: using a number 1`] = `
+Array [
+  Object {
+    "alpha": 1,
+    "blue": 127,
+    "green": 127,
+    "red": 127,
+  },
+]
+`;
+
+exports[`should normalize color values: using a partial RGBA object 1`] = `
+Array [
+  Object {
+    "alpha": 1,
+    "blue": 0,
+    "green": 0,
+    "red": 255,
+  },
+]
+`;
+
+exports[`should normalize color values: using null 1`] = `
+Array [
+  Object {
+    "alpha": 0,
+    "blue": 0,
+    "green": 0,
+    "red": 0,
+  },
+]
+`;
+
+exports[`should wrap when referencing out of bounds cell 1`] = `
+Array [
+  Array [
+    Object {
+      "alpha": 1,
       "blue": 0,
       "green": 0,
-      "red": 1,
+      "red": 0,
     },
     Object {
       "alpha": 1,
       "blue": 0,
       "green": 0,
-      "red": 1,
+      "red": 127,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 127,
+      "red": 0,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 127,
+      "red": 127,
+    },
+  ],
+  Array [
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 127,
+      "red": 127,
+    },
+    Object {
+      "alpha": 1,
+      "blue": 0,
+      "green": 127,
+      "red": 0,
     },
     Object {
       "alpha": 1,
       "blue": 0,
       "green": 0,
-      "red": 1,
+      "red": 127,
     },
     Object {
       "alpha": 1,
       "blue": 0,
       "green": 0,
-      "red": 1,
+      "red": 0,
     },
   ],
 ]
