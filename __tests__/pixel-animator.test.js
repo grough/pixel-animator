@@ -28,7 +28,7 @@ it("should maintain state between frames", () => {
       const self = cells(column, row);
       return !self;
     },
-    colorize: cell => (cell ? 1 : 0)
+    colorize: ({ cell }) => (cell ? 1 : 0)
   });
   const frame1 = frameIterator();
   const frame2 = frameIterator();
@@ -43,7 +43,7 @@ it("should wrap when referencing out of bounds cell", () => {
       if (frame === 0) return [column, row];
       return cells(column - 1, row + 1);
     },
-    colorize: cell => {
+    colorize: ({ cell }) => {
       return { red: cell[0] / 2, green: cell[1] / 2 };
     }
   });

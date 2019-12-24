@@ -194,9 +194,9 @@
             frame: frame % frames,
             cells: cellReader
           };
-          const cell = evolve ? evolve(context) : context;
+          const cell = evolve ? evolve(context) : undefined;
           cellData.push(cell);
-          const color = colorize(cell);
+          const color = colorize({ ...context, cell });
           cellColors = cellColors.concat(normalizeColor(color));
         }
       }
