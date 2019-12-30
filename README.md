@@ -12,10 +12,6 @@
 
 If you want to make your own web page or install the Node.js module, take a look at the [installation notes](https://github.com/grough/pixel-animator/wiki/Installation).
 
-## Make an animation
-
-The least you can do to make an animation is write a special function named `colorize`, similar in principle to a [shader](https://thebookofshaders.com/01/). Your `colorize` function's job is to convert a pixel's position on the screen into a [color](https://github.com/grough/pixel-animator/wiki/Using-Color-%F0%9F%8C%88). You can learn how to write one by reading the [Pixel Animator Tutorial](https://github.com/grough/pixel-animator/wiki/Pixel-Animator-Tutorial), or play with some working examples on [Glitch](https://glitch.com/@grough/pixel-art).
-
 ## There's more…
 
 Some features aren't documented yet. The [wiki](https://github.com/grough/pixel-animator/wiki) is under development.
