@@ -14,6 +14,7 @@
   },
   "files": [
     "pixel-animator.js",
+    "extra.js",
     "index.html"
   ],
   "keywords": [
