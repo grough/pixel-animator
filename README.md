@@ -6,7 +6,7 @@
 
 ### The easy way
 
-1. Start with a template on [Glitch](https://glitch.com/edit/#!/remix/pixel-animator-template)
+1. Start with a template on [Glitch](https://glitch.com/edit/#!/remix/pixel-animator-template) or [CodePen](https://codepen.io/grough/pen/JjopKEZ?editors=1000)
 2. Read the [tutorial](https://github.com/grough/pixel-animator/wiki/Pixel-Animator-Tutorial)
 3. Enjoy?
 
@@ -15,7 +15,3 @@ If you want to make your own web page or install the Node.js module, take a look
 ## There's more…
 
 Some features aren't documented yet. The [wiki](https://github.com/grough/pixel-animator/wiki) is under development.
-
-<!-- Here's an example of Conway's Game of Life created with Pixel Animator that depends on [this mostly undocumented feature](https://github.com/grough/pixel-animator/wiki/Evolution). -->
-
-<!-- To do: Why does this exist? -->
