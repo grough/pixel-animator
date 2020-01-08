@@ -178,13 +178,17 @@
     let cellColors;
     let cellReader;
     let frame = 0;
-    return function generateNextFrame() {
+    return function generateNextFrame(selectedCell) {
       cellDataPrevious = cellData;
       cellReader = createCellReader(columns, rows, cellDataPrevious);
       cellData = [];
       cellColors = [];
       for (let row = 0; row < rows; row++) {
         for (let column = 0; column < columns; column++) {
+          const selected =
+            selectedCell &&
+            selectedCell[0] === column &&
+            selectedCell[1] === row;
           const context = {
             columns,
             rows,
@@ -192,7 +196,8 @@
             column,
             row,
             frame: frame % frames,
-            cells: cellReader
+            cells: cellReader,
+            selected
           };
           const cell = evolve ? evolve(context) : undefined;
           cellData.push(cell);
@@ -212,30 +217,42 @@
       animation.rows,
       rootElement.clientWidth || 320
     );
+    let selected;
+    rootElement.addEventListener("click", function(event) {
+      selected = [
+        Number(event.target.dataset["column"]),
+        Number(event.target.dataset["row"])
+      ];
+    });
     rootElement.style.width = size.width + "px";
     rootElement.style.height = size.height + "px";
     const cellWidth = (1 / animation.columns) * 100 + "%";
     const cellHeight = (1 / animation.rows) * 100 + "%";
-    for (let index = 0; index < animation.rows * animation.columns; index++) {
-      const cellElement = document.createElement("div");
-      cellElement.classList = "pa-cell " + "pa-cell-" + index;
-      cellElement.style.width = cellWidth;
-      cellElement.style.height = cellHeight;
-      cellElement.style.display = "inline-block";
-      cellElement.style.verticalAlign = "top";
-      rootElement.appendChild(cellElement);
+    for (let row = 0; row < animation.rows; row++) {
+      for (let column = 0; column < animation.columns; column++) {
+        const cellElement = document.createElement("div");
+        cellElement.classList = "pa-cell";
+        cellElement.dataset.column = column;
+        cellElement.dataset.row = row;
+        cellElement.style.width = cellWidth;
+        cellElement.style.height = cellHeight;
+        cellElement.style.display = "inline-block";
+        cellElement.style.verticalAlign = "top";
+        rootElement.appendChild(cellElement);
+      }
     }
     const frameIterator = createFrameIterator(animation);
     const transport = createLooper(
       1000 / animation.frameRate,
       function renderNextFrame() {
-        frameIterator().forEach((color, index) => {
+        frameIterator(selected).forEach((color, index) => {
           const cellElement = rootElement.children[index];
           cellElement.style.backgroundColor =
             "rgba(" +
             [color.red, color.green, color.blue, color.alpha].join(",") +
             ")";
         });
+        selected = null;
       }
     );
     transport.play();
