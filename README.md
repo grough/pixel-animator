@@ -1,6 +1,6 @@
 **Pixel Animator** is a toy for making colorful, animated pixel art with JavaScript. Kind of like graphics programming but less powerful and more fun.
 
-[![Rainbow sine wave 256×5×16](examples/1576377638058.gif)](https://glitch.com/~wavey-spectrum)
+[![Rainbow sine wave 256×5×16](rainbow-wave.gif)](https://glitch.com/~wavey-spectrum)
 
 ## Getting Started
 

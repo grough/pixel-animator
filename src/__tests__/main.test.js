@@ -1,6 +1,6 @@
-const PixelAnimator = require("../pixel-animator");
+import PixelAnimator from '../main';
 
-it("should iterate over frames", () => {
+it('should iterate over frames', () => {
   const frameIterator = PixelAnimator({
     columns: 2,
     rows: 2,
@@ -8,8 +8,8 @@ it("should iterate over frames", () => {
     colorize: ({ column, row, frame, columns, rows, frames }) => ({
       red: column / columns,
       green: row / rows,
-      blue: frame / frames
-    })
+      blue: frame / frames,
+    }),
   });
   const frame1 = frameIterator();
   const frame2 = frameIterator();
@@ -18,7 +18,7 @@ it("should iterate over frames", () => {
   expect(frame1).toEqual(frame3);
 });
 
-it("should maintain state between frames", () => {
+it('should maintain state between frames', () => {
   const frameIterator = PixelAnimator({
     columns: 2,
     rows: 2,
@@ -28,14 +28,14 @@ it("should maintain state between frames", () => {
       const self = cells(column, row);
       return !self;
     },
-    colorize: ({ cell }) => (cell ? 1 : 0)
+    colorize: ({ cell }) => (cell ? 1 : 0),
   });
   const frame1 = frameIterator();
   const frame2 = frameIterator();
   expect([frame1, frame2]).toMatchSnapshot();
 });
 
-it("should wrap when referencing out of bounds cell", () => {
+it('should wrap when referencing out of bounds cell', () => {
   const frameIterator = PixelAnimator({
     columns: 2,
     rows: 2,
@@ -45,66 +45,66 @@ it("should wrap when referencing out of bounds cell", () => {
     },
     colorize: ({ cell }) => {
       return { red: cell[0] / 2, green: cell[1] / 2 };
-    }
+    },
   });
   const frame1 = frameIterator();
   const frame2 = frameIterator();
   expect([frame1, frame2]).toMatchSnapshot();
 });
 
-it("should normalize color values", () => {
+it('should normalize color values', () => {
   expect(
     PixelAnimator({
       columns: 1,
       rows: 1,
-      colorize: () => "red"
-    })()
-  ).toMatchSnapshot("using a color name");
+      colorize: () => 'red',
+    })(),
+  ).toMatchSnapshot('using a color name');
 
   expect(
     PixelAnimator({
       columns: 1,
       rows: 1,
-      colorize: () => "#FF0000"
-    })()
-  ).toMatchSnapshot("using a hex code");
+      colorize: () => '#FF0000',
+    })(),
+  ).toMatchSnapshot('using a hex code');
 
   expect(
     PixelAnimator({
       columns: 1,
       rows: 1,
-      colorize: () => ({ red: 1 })
-    })()
-  ).toMatchSnapshot("using a partial RGBA object");
+      colorize: () => ({ red: 1 }),
+    })(),
+  ).toMatchSnapshot('using a partial RGBA object');
 
   expect(
     PixelAnimator({
       columns: 1,
       rows: 1,
-      colorize: () => ({ red: 0.1, green: 0.2, blue: 0.3, alpha: 0.4 })
-    })()
-  ).toMatchSnapshot("using a complete RGBA object");
+      colorize: () => ({ red: 0.1, green: 0.2, blue: 0.3, alpha: 0.4 }),
+    })(),
+  ).toMatchSnapshot('using a complete RGBA object');
 
   expect(
     PixelAnimator({
       columns: 1,
       rows: 1,
-      colorize: () => 0.5
-    })()
-  ).toMatchSnapshot("using a number");
+      colorize: () => 0.5,
+    })(),
+  ).toMatchSnapshot('using a number');
 
   expect(
     PixelAnimator({
       columns: 1,
       rows: 1,
-      colorize: () => null
-    })()
-  ).toMatchSnapshot("using null");
+      colorize: () => null,
+    })(),
+  ).toMatchSnapshot('using null');
 });
 
-it("should generate HTML when given a DOM node", () => {
+it('should generate HTML when given a DOM node', () => {
   document.body.innerHTML = `<div id="root"></div>`;
-  const rootElement = document.getElementById("root");
+  const rootElement = document.getElementById('root');
   const transport = PixelAnimator(
     {
       columns: 2,
@@ -113,14 +113,14 @@ it("should generate HTML when given a DOM node", () => {
       colorize: ({ column, row, frame, columns, rows, frames }) => ({
         red: column / columns,
         green: row / rows,
-        blue: frame / frames
-      })
+        blue: frame / frames,
+      }),
     },
-    rootElement
+    rootElement,
   );
   transport.pause();
   transport.next();
-  expect(rootElement).toMatchSnapshot("first frame");
+  expect(rootElement).toMatchSnapshot('first frame');
   transport.next();
-  expect(rootElement).toMatchSnapshot("second frame");
+  expect(rootElement).toMatchSnapshot('second frame');
 });

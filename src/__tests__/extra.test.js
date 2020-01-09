@@ -1,11 +1,11 @@
-const { scale, intersect } = require("../extra");
+import { scale, intersect } from '../extra';
 
-it("should map a value from one range to another", () => {
+it('should map a value from one range to another', () => {
   expect(scale(0.5, 0, 1, 10, 20)).toBe(15);
   expect(scale(1.5, 1, 2, 0, 1)).toBe(0.5);
 });
 
-it("should determine whether a point intersects a space", () => {
+it('should determine whether a point intersects a space', () => {
   const square = intersect({ left: -1, right: 1, top: -1, bottom: 1 });
   expect(square(0, 0)).toBe(true);
   expect(square(-0.999, 0.999)).toBe(true);

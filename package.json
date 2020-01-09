@@ -1,32 +1,72 @@
 {
   "name": "pixel-animator",
-  "version": "1.1.7",
+  "version": "1.1.10",
   "description": "Make generative pixel art in your browser",
   "repository": {
     "type": "git",
     "url": "https://github.com/grough/pixel-animator"
   },
   "author": "Gavin Rough <gavin@grough.com>",
-  "main": "pixel-animator.js",
+  "main": "umd/main.js",
   "scripts": {
-    "test": "jest --watchAll",
-    "start": "http-server"
+    "test": "jest src/**/*.js --runInBand --watchAll",
+    "build": "rollup --config rollup.config.js",
+    "lint": "eslint --fix src/**/*.js",
+    "format": "prettier --write src/**/*.js"
   },
   "files": [
-    "pixel-animator.js",
-    "extra.js",
-    "index.html"
+    "umd"
   ],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "rollup": "^1.29.0",
+    "rollup-plugin-babel": "^4.3.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 80
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format && yarn lint"
+    }
+  },
   "keywords": [
     "animation",
     "pixel art",
     "generative art",
     "procedural art",
     "cellular automata"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "http-server": "^0.12.0",
-    "jest": "^24.9.0"
-  }
+  ]
 }
