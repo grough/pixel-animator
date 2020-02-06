@@ -52,56 +52,6 @@ it('should wrap when referencing out of bounds cell', () => {
   expect([frame1, frame2]).toMatchSnapshot();
 });
 
-it('should normalize color values', () => {
-  expect(
-    PixelAnimator({
-      columns: 1,
-      rows: 1,
-      colorize: () => 'red',
-    })(),
-  ).toMatchSnapshot('using a color name');
-
-  expect(
-    PixelAnimator({
-      columns: 1,
-      rows: 1,
-      colorize: () => '#FF0000',
-    })(),
-  ).toMatchSnapshot('using a hex code');
-
-  expect(
-    PixelAnimator({
-      columns: 1,
-      rows: 1,
-      colorize: () => ({ red: 1 }),
-    })(),
-  ).toMatchSnapshot('using a partial RGBA object');
-
-  expect(
-    PixelAnimator({
-      columns: 1,
-      rows: 1,
-      colorize: () => ({ red: 0.1, green: 0.2, blue: 0.3, alpha: 0.4 }),
-    })(),
-  ).toMatchSnapshot('using a complete RGBA object');
-
-  expect(
-    PixelAnimator({
-      columns: 1,
-      rows: 1,
-      colorize: () => 0.5,
-    })(),
-  ).toMatchSnapshot('using a number');
-
-  expect(
-    PixelAnimator({
-      columns: 1,
-      rows: 1,
-      colorize: () => null,
-    })(),
-  ).toMatchSnapshot('using null');
-});
-
 it('should generate HTML when given a DOM node', () => {
   document.body.innerHTML = `<div id="root"></div>`;
   const rootElement = document.getElementById('root');

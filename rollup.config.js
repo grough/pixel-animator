@@ -4,7 +4,7 @@ export default [
   {
     input: 'src/main.js',
     output: {
-      file: __dirname + '/umd/main.js',
+      file: __dirname + '/main.js',
       format: 'umd',
       name: 'PixelAnimator',
     },
@@ -13,7 +13,7 @@ export default [
   {
     input: 'src/extra.js',
     output: {
-      file: __dirname + '/umd/extra.js',
+      file: __dirname + '/extra.js',
       format: 'umd',
       name: 'PixelAnimatorExtra',
     },

@@ -6,7 +6,7 @@
 
 ### The easy way
 
-1. Start with a template on [Glitch](https://glitch.com/edit/#!/remix/pixel-animator-template) or [CodePen](https://codepen.io/grough/pen/JjopKEZ?editors=1000)
+1. Start with a template on [Glitch](https://glitch.com/edit/#!/remix/pixel-animator-template) or [CodePen](https://codepen.io/grough/pen/JjdoYoa?editors=1000)
 2. Read the [tutorial](https://github.com/grough/pixel-animator/wiki/Pixel-Animator-Tutorial)
 3. Enjoy?
 

@@ -1,5 +1,7 @@
 node_modules
 dist
+main.js
+extra.js
 umd
 .cache
 .DS_Store
