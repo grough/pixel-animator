@@ -1,6 +1,6 @@
-import PixelAnimator from '../main';
+import PixelAnimator from "../main";
 
-it('should iterate over frames', () => {
+it("should iterate over frames", () => {
   const frameIterator = PixelAnimator({
     columns: 2,
     rows: 2,
@@ -18,7 +18,7 @@ it('should iterate over frames', () => {
   expect(frame1).toEqual(frame3);
 });
 
-it('should maintain state between frames', () => {
+it("should maintain state between frames", () => {
   const frameIterator = PixelAnimator({
     columns: 2,
     rows: 2,
@@ -35,7 +35,7 @@ it('should maintain state between frames', () => {
   expect([frame1, frame2]).toMatchSnapshot();
 });
 
-it('should wrap when referencing out of bounds cell', () => {
+it("should wrap when referencing out of bounds cell", () => {
   const frameIterator = PixelAnimator({
     columns: 2,
     rows: 2,
@@ -52,9 +52,9 @@ it('should wrap when referencing out of bounds cell', () => {
   expect([frame1, frame2]).toMatchSnapshot();
 });
 
-it('should generate HTML when given a DOM node', () => {
-  document.body.innerHTML = `<div id="root"></div>`;
-  const rootElement = document.getElementById('root');
+it("should generate HTML when given a DOM node", () => {
+  document.body.innerHTML = '<div id="root"></div>';
+  const rootElement = document.getElementById("root");
   const transport = PixelAnimator(
     {
       columns: 2,
@@ -70,7 +70,7 @@ it('should generate HTML when given a DOM node', () => {
   );
   transport.pause();
   transport.next();
-  expect(rootElement).toMatchSnapshot('first frame');
+  expect(rootElement).toMatchSnapshot("first frame");
   transport.next();
-  expect(rootElement).toMatchSnapshot('second frame');
+  expect(rootElement).toMatchSnapshot("second frame");
 });

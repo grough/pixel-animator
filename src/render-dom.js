@@ -21,7 +21,7 @@ function createLooper(interval, callback) {
     play: () => {
       playing = true;
       clearTimeout(timeoutId);
-      timeoutId = loop();
+      loop();
     },
     pause: () => {
       playing = false;
@@ -56,6 +56,7 @@ export function renderAnimatedDom(animation, rootElement) {
   );
   rootElement.style.width = size.width + 'px';
   rootElement.style.height = size.height + 'px';
+  rootElement.style.fontSize = 0;
   const cellWidth = 100 / animation.columns + '%';
   const cellHeight = 100 / animation.rows + '%';
   for (let index = 0; index < animation.rows * animation.columns; index++) {

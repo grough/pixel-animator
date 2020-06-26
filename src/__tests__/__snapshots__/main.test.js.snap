@@ -4,7 +4,7 @@ exports[`should generate HTML when given a DOM node: first frame 1`] = `
 <div
   class=" pixel-animator"
   id="root"
-  style="width: 320px; height: 320px;"
+  style="width: 320px; height: 320px; font-size: 0px;"
 >
   <div
     class="pa-cell pa-cell-0"
@@ -29,7 +29,7 @@ exports[`should generate HTML when given a DOM node: second frame 1`] = `
 <div
   class=" pixel-animator"
   id="root"
-  style="width: 320px; height: 320px;"
+  style="width: 320px; height: 320px; font-size: 0px;"
 >
   <div
     class="pa-cell pa-cell-0"

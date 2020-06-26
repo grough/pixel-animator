@@ -1,7 +1,7 @@
-import { normalizeColor } from '../color';
+import { normalizeColor } from "../color";
 
-it('should normalize a color name', () => {
-  expect(normalizeColor('red')).toEqual({
+it("should normalize a color name", () => {
+  expect(normalizeColor("red")).toEqual({
     alpha: 1,
     blue: 54,
     green: 65,
@@ -9,8 +9,8 @@ it('should normalize a color name', () => {
   });
 });
 
-it('should normalize a hex code', () => {
-  expect(normalizeColor('#FF0000')).toEqual({
+it("should normalize a hex code", () => {
+  expect(normalizeColor("#FF0000")).toEqual({
     alpha: 1,
     blue: 0,
     green: 0,
@@ -18,7 +18,7 @@ it('should normalize a hex code', () => {
   });
 });
 
-it('should normalize a partial RGBA object', () => {
+it("should normalize a partial RGBA object", () => {
   expect(normalizeColor({ red: 1 })).toEqual({
     alpha: 1,
     blue: 0,
@@ -27,7 +27,7 @@ it('should normalize a partial RGBA object', () => {
   });
 });
 
-it('should normalize a complete RGBA object', () => {
+it("should normalize a complete RGBA object", () => {
   expect(
     normalizeColor({ red: 0.1, green: 0.2, blue: 0.3, alpha: 0.4 }),
   ).toEqual({
@@ -38,7 +38,7 @@ it('should normalize a complete RGBA object', () => {
   });
 });
 
-it('should normalize a number', () => {
+it("should normalize a number", () => {
   expect(normalizeColor(0.5)).toEqual({
     alpha: 1,
     blue: 127,
@@ -47,7 +47,7 @@ it('should normalize a number', () => {
   });
 });
 
-it('should normalize a null value', () => {
+it("should normalize a null value", () => {
   expect(normalizeColor(null)).toEqual({
     alpha: 0,
     blue: 0,
