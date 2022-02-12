@@ -1,1 +1,386 @@
-<!-- Pixel Animator Website -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Lilac Loop is a free plugin for VCV Rack inspired by the recording
+    style of a live looping pedal."
+    />
+    <title>Make Generative Pixel Art with JavaScript</title>
+    <style>
+      body {
+        background-color: rgb(240, 240, 240);
+        margin: 0 0 48px 0;
+        line-height: 1.5;
+        color: #382d30;
+      }
+      body,
+      h1 {
+        font-family: sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+      }
+      h1 {
+        margin: 0 auto;
+        max-width: 22em;
+      }
+      ol,
+      ul {
+        padding-left: 1em;
+      }
+      a {
+        color: #ab3a56;
+        text-decoration: underline;
+      }
+      h2,
+      h3 {
+        font-size: 1em;
+        margin-top: 2em;
+      }
+      h2 {
+        border-bottom: 2px solid #382d30;
+        margin-top: 48px;
+        margin-bottom: 24px;
+        padding-left: 12px;
+        line-height: 2.6;
+        font-size: 16px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #382d30;
+      }
+      header {
+        margin: 32px 18px;
+        text-align: center;
+      }
+      main {
+        max-width: 620px;
+        margin: 1em auto;
+        padding: 0 0.8em;
+      }
+      #animation-1 {
+        width: 256px;
+        margin: 0 auto;
+      }
+      .example {
+        width: 100px;
+        height: 100px;
+        background-color: lightgray;
+        display: inline-block;
+      }
+    </style>
+    <script src="https://unpkg.com/pixel-animator/main.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Pixel Animator is a toy for animating generative pixel art with
+        JavaScript.
+      </h1>
+    </header>
+    <main>
+      <div id="animation-1"></div>
+      <h2 id="get-started">Quick Start</h2>
+
+      <p>
+        If you want to jump right in, make a copy of the "boring" template
+        animation on
+        <a href="https://codepen.io/grough/pen/JjdoYoa?editors=1000">CodePen</a>
+        or
+        <a href="https://glitch.com/edit/#!/remix/pixel-animator-template"
+          >Glitch</a
+        >.
+      </p>
+
+      <!-- <h2 id="intro">Introduction</h2>
+
+      <p>
+        Pixel Animator is for making low-res generative art by writing
+        JavaScript code. It's not a drawing tool. It's more of a visual
+        calculator.
+      </p>
+
+      <p>
+        It's kind of like graphics programming but less powerful and more fun.
+      </p>
+
+      <p>
+        It's low-resoluton by design. The default animation is 16 x 16 pixels in
+        size running at 8 frames per second.
+      </p>
+
+      <p>
+        The library's source code can be found on
+        <a href="https://github.com/grough/pixel-animator">GitHub</a>.
+      </p>
+
+      <h2 id="examples">Examples</h2>
+
+      <p>
+        Below are a few examples of things made with Pixel Animator. Touch each
+        example to play it.
+      </p>
+
+      <div class="examples">
+        <div class="example"></div>
+        <div class="example"></div>
+        <div class="example"></div>
+        <div class="example"></div>
+      </div> -->
+
+      <h2 id="tutorial">Tutorial</h2>
+
+      <h3>Create an HTML Document</h3>
+
+      <p>
+        To start, you'll need an HTML document like the example below and a
+        modern web browser to view it with. You could copy the HTML into your
+        own page, or just start with a working template.
+      </p>
+
+      <ul>
+        <li>New HTML document</li>
+        <li>Load the Pixel Animator JavaScript library</li>
+        <li>Add an element to your HTML document</li>
+        <li>Call the Pixel Animator library</li>
+      </ul>
+
+      <pre>
+<code>
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;!-- Load the Pixel Animator library --&gt;
+    &lt;script src=&quot;https://unpkg.com/pixel-animator/main.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- Add an element to host your animation --&gt;
+    &lt;div id=&quot;my-animation&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+      // Connect it all together to render a default animation
+      PixelAnimator({}, document.getElementById(&quot;my-animation&quot;));
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code>
+    </pre>
+      <p>
+        If it worked, you should see a default animation on your page: [The
+        default checkerboard animation]
+      </p>
+      <p>
+        We passed two arguments to the <code>PixelAnimator</code> function.
+        First is the empty object <code>{}</code> which gives us a default
+        animation. Second is an HTML element for the animation to live inside.
+        We can modify the empty animation object <code>{}</code> to render
+        something more interesting. The rest of this tutorial is about a
+        property on the animation object named <code>colorize</code>, which will
+        be assigned a special type of function that decides how to color each
+        pixel in the animation.
+      </p>
+      <h3>Writing a <code>colorize</code> function</h3>
+
+      <p>
+        To make an animation, you need to write a special kind of function named
+        <code>colorize</code>, similar in principle to a shader. Your
+        <code>colorize</code> function's job is to convert a pixel's position in
+        space and time into a color.
+      </p>
+
+      <p>
+        The following steps develop a simple example of such a function in five
+        parts, each of which can be viewed and edited at
+        <a href="https://glitch.com/~pixel-animator-tutorial"
+          >glitch.com/~pixel-animator-tutorial</a
+        >.
+      </p>
+
+      <h3>0. The default animation</h3>
+
+      <p>…</p>
+
+      <h3>1. A purple square</h3>
+
+      <img
+        src="https://github.com/grough/pixel-animator/wiki/example-1-1-square.gif"
+      />
+
+      <p>Here each pixel says "always color me purple".</p>
+
+      <pre>
+<code>
+function colorize() {
+  return "purple";
+}
+
+PixelAnimator({ colorize }, document.getElementById("my-animation"));
+</code>
+</pre>
+
+      <p>
+        Note that we added a <code>colorize</code> property to the formerly
+        empty animation object <code>{}</code> in our call to
+        <code>PixelAnimator</code>. Since the colorize function returns the same
+        <code>purple"</code> value every time it's called (for every pixel in
+        every frame) all pixels will be colored purple.
+      </p>
+
+      <p>
+        <a
+          href="https://glitch.com/edit/#!/pixel-animator-tutorial?path=01-square.js"
+          >Try this code</a
+        >
+      </p>
+
+      <h3>2. Lime row on a purple square</h3>
+
+      <img
+        src="https://github.com/grough/pixel-animator/wiki/example-1-2-row.gif"
+      />
+
+      <p>
+        Here each pixel says
+        <em>If I'm in the third row, color me lime. If not, color me purple</em
+        >.
+      </p>
+
+      <pre>
+<code>
+function colorize(pixel) {
+  if (pixel.row == 2) {
+    return "lime";
+  } else {
+    return "purple";
+  }
+}
+</code>
+      </pre>
+
+      We can use the pixel argument to ask a question about which
+      <code>row</code> the current pixel belongs to. The expression
+      <code> pixel.row == 2 </code> in the if statement translates to the
+      question "am I in the third row?". The third row belongs to the number
+      <code>2</code> because we start counting rows at <code>0</code>.
+
+      <p>
+        <a
+          href="https://glitch.com/edit/#!/pixel-animator-tutorial?path=02-row.js"
+          >Try this code</a
+        >
+      </p>
+
+      <h3>3. Lime dot on a purple square</h3>
+
+      <img
+        src="https://github.com/grough/pixel-animator/wiki/example-1-3-dot.gif"
+      />
+
+      <p>
+        Here each pixel says
+        <em
+          >If I'm in the third row and the sixth column, color me lime. If not,
+          color me purple</em
+        >.
+      </p>
+
+      <pre>
+<code>
+function colorize(pixel) {
+  if (pixel.row == 2 && pixel.column == 5) {
+    return "lime";
+  } else {
+    return "purple";
+  }
+}
+</code>
+      </pre>
+
+      <p>
+        This step adds a second part to the question, asking which
+        <code>column</code> the pixel is in. Since there's only one pixel that
+        can be in both the second row and the sixth column, we see a single lime
+        pixel. The sixth column belongs to the number <code>5</code> because we
+        start counting columns at <code>0</code>.
+      </p>
+
+      <p>
+        <a
+          href="https://glitch.com/edit/#!/pixel-animator-tutorial?path=03-dot.js"
+          >Try this code</a
+        >
+      </p>
+
+      <h3>4. Blinking lime dot on a purple square</h3>
+
+      <img
+        src="https://github.com/grough/pixel-animator/wiki/example-1-4-blinking-dot.gif"
+      />
+
+      <p>
+        Here each pixel says
+        <em
+          >If I'm in the sixth column, third row, and my frame has an even
+          number, color me lime. If not, color me purple</em
+        >.
+      </p>
+
+      <p>
+        This step adds a third part to the question asking about which frame the
+        current pixel is in. The expression <code>frame % 2 == 0</code> in theif
+        <code>if</code> statement translates to the question
+        <em> Is my frame number even? </em>. The frame number increases as time
+        passes, counting up one by one, alternating between even and odd
+        numbers. When the animation reaches an even-numbered frame, you'll see a
+        lime pixel in the position given by row == 2 && column == 5. When it
+        reaches an odd-numbered frame, you won't see a lime pixel at all. The
+        ever-increasing frame number causes the lime pixel to blink on and off.
+      </p>
+
+      <p>
+        We also destructured the <code>pixel</code> argument into
+        <code>{ column, row, frame }</code> to keep things tidy.
+      </p>
+
+      <p>
+        <a
+          href="https://glitch.com/edit/#!/pixel-animator-tutorial?path=04-blinking-dot.js"
+          >Try this code</a
+        >
+      </p>
+
+      <h3>5. Lime dot moving across a purple square</h3>
+      <img
+        src="https://github.com/grough/pixel-animator/wiki/example-1-5-moving-dot.gif"
+      />
+
+      <p>
+        Here each pixel says to itself,
+        <em
+          >If both my column and row numbers are equal to my frame number, I
+          should be lime. If not, make me purple</em
+        >. This logic causes the lime pixel to trace a diagonal line as the
+        frame number increases over time.
+      </p>
+
+      <pre>
+<code>
+function colorize({ column, row, frame }) {
+  if (column == frame && row == frame) {
+    return "lime";
+  } else {
+    return "purple";
+  }
+}
+</code>
+      </pre>
+
+      <p>
+        <a
+          href="https://glitch.com/edit/#!/pixel-animator-tutorial?path=05-moving-dot.js"
+          >Try this code</a
+        >
+      </p>
+    </main>
+    <script src="./animation-1.js"></script>
+  </body>
+</html>
