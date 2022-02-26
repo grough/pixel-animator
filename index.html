@@ -69,6 +69,12 @@
       pre code em {
         /* color: #008a05; */
       }
+      pre {
+        overflow: scroll;
+        background-color: white;
+        padding: 1em;
+        font-size: 14px;
+      }
     </style>
     <script src="https://unpkg.com/pixel-animator/main.js"></script>
   </head>
@@ -102,8 +108,7 @@
       </p>
 
       <pre>
-<code>
-&lt;html&gt;
+<code>&lt;html&gt;
   &lt;head&gt;
     <strong>&lt;!-- Load the Pixel Animator library --&gt;</strong>
     <em>&lt;script src=&quot;https://unpkg.com/pixel-animator@1/main.js&quot;&gt;&lt;/script&gt;</em>
@@ -116,9 +121,7 @@
       <em>PixelAnimator({}, document.getElementById(&quot;my-animation&quot;));</em>
     &lt;/script&gt;
   &lt;/body&gt;
-&lt;/html&gt;
-</code>
-    </pre>
+&lt;/html&gt;</code></pre>
       <!-- <p>If it worked, you should see the starter animation on your page:</p> -->
 
       <div id="starter-animation"></div>
@@ -140,26 +143,22 @@
       </p>
 
       <p>
-        The only required property is a function named <code>shader</code>. This
-        function takes a pixel's position in space time as input and returns a
-        color as output.
+        The only required property is a function named <code>colorize</code>.
+        This function takes a pixel's position in space time as input and
+        returns a color as output.
       </p>
 
-      <pre>
-<code>
-{
-  shader: function(pixel) {
+      <pre><code>{
+  colorize: function(pixel) {
     // Compute a color…
   }
-}
-</code>
-</pre>
+}</code></pre>
 
-      <h3>2. Write a <code>shader</code> function</h3>
+      <h3>2. Write a <code>colorize</code> function</h3>
 
       <p>
         To make an animation, you need to write a special kind of function named
-        <code>colorize</code>, similar in principle to a shader. Your
+        <code>colorize</code>, similar in principle to a colorize. Your
         <code>colorize</code> function's job is to convert a pixel's position in
         space and time into a color.
       </p>
@@ -181,14 +180,11 @@
       <p>Here each pixel says "always color me purple".</p>
 
       <pre>
-<code>
-function colorize() {
+<code>function colorize() {
   return "purple";
 }
 
-PixelAnimator({ colorize }, document.getElementById("my-animation"));
-</code>
-</pre>
+PixelAnimator({ colorize }, document.getElementById("my-animation"));</code></pre>
 
       <p>
         Note that we added a <code>colorize</code> property to the formerly
@@ -217,17 +213,13 @@ PixelAnimator({ colorize }, document.getElementById("my-animation"));
         >.
       </p>
 
-      <pre>
-<code>
-function colorize(pixel) {
+      <pre><code>function colorize(pixel) {
   if (pixel.row == 2) {
     return "lime";
   } else {
     return "purple";
   }
-}
-</code>
-      </pre>
+}</code></pre>
 
       We can use the pixel argument to ask a question about which
       <code>row</code> the current pixel belongs to. The expression
@@ -256,18 +248,13 @@ function colorize(pixel) {
         >.
       </p>
 
-      <pre>
-<code>
-function colorize(pixel) {
+      <pre><code>function colorize(pixel) {
   if (pixel.row == 2 && pixel.column == 5) {
     return "lime";
   } else {
     return "purple";
   }
-}
-</code>
-      </pre>
-
+}</code></pre>
       <p>
         This step adds a second part to the question, asking which
         <code>column</code> the pixel is in. Since there's only one pixel that
@@ -297,17 +284,13 @@ function colorize(pixel) {
         >.
       </p>
 
-      <pre>
-<code>
-function colorize({ column, row, frame }) {
+      <pre><code>function colorize({ column, row, frame }) {
   if (row == 2 && column == 5 && frame % 2 == 0) {
     return "lime";
   } else {
     return "purple";
   }
-}
-</code>
-</pre>
+}</code></pre>
 
       <p>
         This step adds a third part to the question asking about which frame the
@@ -347,17 +330,13 @@ function colorize({ column, row, frame }) {
         frame number increases over time.
       </p>
 
-      <pre>
-<code>
-function colorize({ column, row, frame }) {
+      <pre><code>function colorize({ column, row, frame }) {
   if (column == frame && row == frame) {
     return "lime";
   } else {
     return "purple";
   }
-}
-</code>
-      </pre>
+}</code></pre>
 
       <p>
         <a
